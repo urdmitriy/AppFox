@@ -1,0 +1,25 @@
+﻿@using CRM.Data
+
+<div class="jobs-container">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>    
+</div>
+
+@code {
+    [Parameter] public List<JobModel>? Jobs { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<JobModel> OnStatusUpdated { get; set; }
+
+    public JobModel CurrentJob { get; set; } = new JobModel();
+
+    public async Task UpdateJobAsync(JobStatuses newStatus)
+    {
+        var task = Jobs.SingleOrDefault(x => x.Id == CurrentJob.Id);
+        if (task != null)
+        {
+            task.Status = newStatus;
+            await OnStatusUpdated.InvokeAsync(CurrentJob);
+        }
+    }
+}

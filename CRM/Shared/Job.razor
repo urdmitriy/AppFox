@@ -1,0 +1,32 @@
+﻿@using CRM.Data
+
+<div class="card draggable bg-secondary bg-gradient ms-auto me-auto" draggable="true" @ondragstart="@(() => HandleDragStart(JobModel))">
+    <div class="row">
+        <div class="col-3">
+            <img src="/img/bob.png" class="card-img-top" draggable="false" alt="...">
+        </div>
+        <div class="col-9">
+            <div class="card-body text-light">
+                <div class="row">
+                    <h5 class="card-title w-100">@JobModel.Description</h5>
+                </div>
+                <div class="row justify-content-end">
+                    <a href="#" class="btn btn-primary w-auto" draggable="false">Перейти куда-нибудь</a>
+                </div>
+                
+            </div>   
+        </div>
+    </div>
+    
+    
+</div>
+
+@code {
+    [CascadingParameter] JobsContainer Container { get; set; }
+    [Parameter] public JobModel JobModel { get; set; }
+
+    private void HandleDragStart(JobModel selectedJob)
+    {
+        Container.CurrentJob = selectedJob;
+    }
+}

@@ -1,0 +1,29 @@
+@page "/"
+@using CRM.Data
+
+<PageTitle>Index</PageTitle>
+
+<JobsContainer Jobs="Jobs" OnStatusUpdated="@(() => { return; })">
+     <JobList JobListStatus="JobStatuses.Todo"/>
+     <JobList JobListStatus="JobStatuses.Started"/>
+     <JobList JobListStatus="JobStatuses.Completed"/>
+ </JobsContainer>
+
+@code
+{
+    List<JobModel> Jobs = new List<JobModel>();
+
+    protected override void OnInitialized()
+    {
+        for (int i = 1; i < 7; i++)
+        {
+            Jobs.Add(new JobModel()
+            {
+                Id = i,
+                Description = $"Задача #{i}",
+                Status = JobStatuses.Todo,
+            });
+        }
+    
+    }
+}

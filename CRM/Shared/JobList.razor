@@ -1,0 +1,36 @@
+﻿@using CRM.Data
+<div class="job-list">
+    <h3>@JobListStatus (@Jobs.Count)</h3>
+    
+    <div 
+        class="dropzone align-content-center" 
+        ondragover="event.preventDefault()" 
+        @ondrop="@HandleDrop"
+        >
+        @foreach (var job in Jobs)
+        {
+            <Job JobModel = "job" />
+        }
+        <button class="mt-3 btn btn-success">Добавить задачу</button>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter] JobsContainer Container { get; set; }
+    [Parameter] public JobStatuses JobListStatus { get; set; }
+
+    List<JobModel> Jobs = new List<JobModel>();
+
+    protected override void OnParametersSet()
+    {
+        Jobs.Clear();
+        Jobs.AddRange(Container.Jobs.Where(x=>x.Status == JobListStatus));
+    }
+
+    
+    private async Task HandleDrop()
+    {
+        await Container.UpdateJobAsync(JobListStatus);
+    }
+}

@@ -1,0 +1,17 @@
+﻿.draggable {
+    margin-bottom: 10px;
+    padding: 10px 25px;
+    border: 1px solid #424d5c;
+    cursor: grab;
+    border-radius: 5px;
+    width: 95%;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+img {
+    width: 90%;
+    height: 90%;
+}
